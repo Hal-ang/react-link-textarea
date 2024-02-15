@@ -1,1 +1,3 @@
-export * from './Hello';
+import Textarea from './Textarea';
+
+export default Textarea;

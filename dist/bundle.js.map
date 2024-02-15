@@ -1,1 +1,1 @@
-{"version":3,"file":"bundle.js","sources":["../src/Hello.tsx"],"sourcesContent":["// src/Hello.jsx\n\nexport const Hello = () => {\n  return <div>hi</div>;\n};\n"],"names":["Hello","React"],"mappings":"AAAA;IAEaA,KAAK,GAAG,SAARA,KAAKA,GAAG;EACnB,OAAOC,sCAAa,CAAA;AACtB;;;;"}
+{"version":3,"file":"bundle.js","sources":["../src/Textarea.tsx"],"sourcesContent":[null],"names":["Textarea","_jsx"],"mappings":";;AAIA,IAAMA,QAAQ,GAAG,SAAXA,QAAQA,GAAG;AACf,EAAA,OAAOC,cAAW,CAAA;AACpB;;;;"}

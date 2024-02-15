@@ -1,7 +1,8 @@
-// src/Hello.jsx
-var Hello = function Hello() {
-  return React.createElement("div", null, "hi");
+import { jsx } from 'react/jsx-runtime';
+
+var Textarea = function Textarea() {
+  return jsx("div", {});
 };
 
-export { Hello };
+export { Textarea as default };
 //# sourceMappingURL=bundle.js.map

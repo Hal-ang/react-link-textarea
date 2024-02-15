@@ -1,7 +1,7 @@
 // rollup.config.js
 
 import babel from '@rollup/plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
+import css from 'rollup-plugin-import-css';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
@@ -19,5 +19,6 @@ export default {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
     typescript(),
+    css(),
   ],
 };
