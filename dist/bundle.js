@@ -15,6 +15,34 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
   return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
+function styleInject(css, ref) {
+  if (ref === void 0) ref = {};
+  var insertAt = ref.insertAt;
+  if (!css || typeof document === 'undefined') {
+    return;
+  }
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = "a:link {\n  color: #0000ee !important;\n}\n\na:visited {\n  color: #551a8b !important;\n}\n\n.container__mirror a {\n  pointer-events: auto !important;\n  text-decoration: underline;\n}\n";
+styleInject(css_248z);
+
 var snakeToCamel = function snakeToCamel(string) {
   return string.split('-').map(function (word, index) {
     return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
@@ -89,7 +117,11 @@ var useTextarea = function useTextarea(textareaRef, mirroredRef) {
 var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   var style = _a.style,
     linkTarget = _a.linkTarget,
-    rest = __rest(_a, ["style", "linkTarget"]);
+    _a$fontColor = _a.fontColor,
+    fontColor = _a$fontColor === void 0 ? 'black' : _a$fontColor,
+    _a$caretColor = _a.caretColor,
+    caretColor = _a$caretColor === void 0 ? 'black' : _a$caretColor,
+    rest = __rest(_a, ["style", "linkTarget", "fontColor", "caretColor"]);
   var textareaRef = useRef(null);
   var mirroredRef = useRef(null);
   var _useTextarea = useTextarea(textareaRef, mirroredRef),
@@ -125,7 +157,7 @@ var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
       (_a = textareaRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener('scroll', handleScrollTop);
       (_b = textareaRef.current) === null || _b === void 0 ? void 0 : _b.removeEventListener('input', convertToLink);
     };
-  }, [textareaRef, mirroredRef, linkTarget]);
+  }, [textareaRef, mirroredRef, linkTarget, setLinkifyStr]);
   return jsx(Fragment, {
     children: jsxs("div", {
       className: "container",
@@ -141,9 +173,10 @@ var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
             forwardedRef.current = node;
           }
         },
-        className: "container__textarea",
-        style: Object.assign(Object.assign({}, style), {
-          background: 'transparent',
+        className: "container__textarea ".concat(rest.className),
+        style: Object.assign(Object.assign({
+          caretColor: caretColor
+        }, style), {
           color: 'transparent',
           position: 'relative'
         })
@@ -151,6 +184,7 @@ var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
         className: "container__mirror",
         ref: mirroredRef,
         style: {
+          color: fontColor,
           width: '100%',
           height: '100%',
           position: 'absolute',

@@ -7,6 +7,6 @@ a:visited {
 }
 
 .container__mirror a {
-  pointer-events: auto;
+  pointer-events: auto !important;
   text-decoration: underline;
 }
