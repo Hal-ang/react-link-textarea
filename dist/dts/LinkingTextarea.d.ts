@@ -1,9 +1,12 @@
 import './style/index.css';
 import { CSSProperties, TextareaHTMLAttributes } from 'react';
-type TextareaAttributes = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'style'>;
+type TextareaAttributes = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'style' | 'className'>;
 export type LinkTargetType = '_blank' | '_self' | '_parent' | '_top' | string;
 interface LinkingTextareaInterface extends TextareaAttributes {
-    style?: CSSProperties;
+    containerStyle?: CSSProperties;
+    textareaStyle?: CSSProperties;
+    containerClassName?: string;
+    textareaClassName?: string;
     linkTarget?: LinkTargetType;
     fontColor?: CSSProperties['color'];
     caretColor?: CSSProperties['caretColor'];

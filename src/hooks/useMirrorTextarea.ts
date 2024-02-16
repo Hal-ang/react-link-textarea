@@ -14,42 +14,20 @@ const useMirrorTextarea = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
   mirroredRef: RefObject<HTMLDivElement>,
 ) => {
-  const getValidContentWidth = useCallback(
-    (styles: CSSStyleDeclaration) => {
-      if (!textareaRef?.current) {
-        throw new Error('Textarea ref is not defined');
-      }
-
-      const padding = parsePxToNumber(styles.padding);
-      const paddingLeft = parsePxToNumber(styles.paddingLeft);
-      const paddingRight = parsePxToNumber(styles.paddingRight);
-
-      return (
-        textareaRef.current.clientWidth -
-        (padding ? padding * 2 : paddingLeft + paddingRight) +
-        'px'
-      );
-    },
-    [textareaRef],
-  );
-
-  const getValidContentHeight = useCallback(
-    (styles: CSSStyleDeclaration) => {
-      if (!textareaRef?.current) {
-        throw new Error('Textarea ref is not defined');
-      }
-      const padding = parsePxToNumber(styles.padding);
-      const paddingTop = parsePxToNumber(styles.paddingTop);
-      const paddingBottom = parsePxToNumber(styles.paddingBottom);
-
-      return (
-        textareaRef.current.clientHeight -
-        (padding ? padding * 2 : paddingTop + paddingBottom) +
-        'px'
-      );
-    },
-    [textareaRef],
-  );
+  const getValidContentWidth = (styles: CSSStyleDeclaration) => {
+    if (!textareaRef?.current) {
+      throw new Error('Textarea ref is not defined');
+    }
+    const borderWidth = parsePxToNumber(styles.borderWidth);
+    return textareaRef.current.clientWidth + 2 * borderWidth + 'px';
+  };
+  const getValidContentHeight = (styles: CSSStyleDeclaration) => {
+    if (!textareaRef?.current) {
+      throw new Error('Textarea ref is not defined');
+    }
+    const borderWidth = parsePxToNumber(styles.borderWidth);
+    return textareaRef.current.clientHeight + 2 * borderWidth + 'px';
+  };
 
   const resizeObserver = useMemo(() => {
     return new ResizeObserver(() => {
@@ -84,6 +62,7 @@ const useMirrorTextarea = (
         'wordSpacing',
         'wordWrap',
         'textAlign',
+        'borderRadius',
       ].forEach((p: string) => {
         if (!mirroredRef.current) return;
 

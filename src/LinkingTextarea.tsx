@@ -13,11 +13,14 @@ import useTextarea from './hooks/useMirrorTextarea';
 
 type TextareaAttributes = Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
-  'style'
+  'style' | 'className'
 >;
 export type LinkTargetType = '_blank' | '_self' | '_parent' | '_top' | string;
 interface LinkingTextareaInterface extends TextareaAttributes {
-  style?: CSSProperties;
+  containerStyle?: CSSProperties;
+  textareaStyle?: CSSProperties;
+  containerClassName?: string;
+  textareaClassName?: string;
   linkTarget?: LinkTargetType;
   fontColor?: CSSProperties['color'];
   caretColor?: CSSProperties['caretColor'];
@@ -26,7 +29,10 @@ interface LinkingTextareaInterface extends TextareaAttributes {
 const LinkingTextarea = forwardRef(
   (
     {
-      style,
+      containerStyle,
+      textareaStyle,
+      containerClassName = '',
+      textareaClassName = '',
       linkTarget,
       fontColor = 'black',
       caretColor = 'black',
@@ -46,8 +52,8 @@ const LinkingTextarea = forwardRef(
 
     useEffect(() => {
       overwireTextToMirroredRef();
-      overwriteStyleToMirroredRef(style);
-    }, [overwireTextToMirroredRef, overwriteStyleToMirroredRef, style]);
+      overwriteStyleToMirroredRef(textareaStyle);
+    }, [overwireTextToMirroredRef, overwriteStyleToMirroredRef, textareaStyle]);
 
     useEffect(() => {
       if (!textareaRef?.current) return;
@@ -84,21 +90,24 @@ const LinkingTextarea = forwardRef(
 
     return (
       <>
-        <div className="container" style={{position: 'relative'}}>
+        <div
+          className={`container ${containerClassName}`}
+          style={{...containerStyle, position: 'relative'}}>
           <textarea
             ref={node => {
               textareaRef.current = node;
-
               if (typeof forwardedRef === 'function') {
                 forwardedRef(node);
               } else if (forwardedRef) {
                 forwardedRef.current = node;
               }
             }}
-            className={`container__textarea ${rest.className}`}
+            className={`container__textarea ${textareaClassName}`}
             style={{
+              width: '100%',
+              height: '100%',
               caretColor,
-              ...style,
+              ...textareaStyle,
               color: 'transparent',
               position: 'relative',
             }}

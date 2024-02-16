@@ -1,5 +1,5 @@
 import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
-import { useCallback, useMemo, forwardRef, useRef, useEffect } from 'react';
+import { useMemo, useCallback, forwardRef, useRef, useEffect } from 'react';
 import linkifyStr from 'linkify-string';
 
 function __rest(s, e) {
@@ -53,24 +53,26 @@ var parsePxToNumber = function parsePxToNumber(value) {
 };
 
 var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
-  var getValidContentWidth = useCallback(function (styles) {
+  var getValidContentWidth = function getValidContentWidth(styles) {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
       throw new Error('Textarea ref is not defined');
     }
-    var padding = parsePxToNumber(styles.padding);
-    var paddingLeft = parsePxToNumber(styles.paddingLeft);
-    var paddingRight = parsePxToNumber(styles.paddingRight);
-    return textareaRef.current.clientWidth - (padding ? padding * 2 : paddingLeft + paddingRight) + 'px';
-  }, [textareaRef]);
-  var getValidContentHeight = useCallback(function (styles) {
+    var borderWidth = parsePxToNumber(styles.borderWidth);
+    parsePxToNumber(styles.padding);
+    parsePxToNumber(styles.paddingLeft);
+    parsePxToNumber(styles.paddingRight);
+    return textareaRef.current.clientWidth + 2 * borderWidth + 'px';
+  };
+  var getValidContentHeight = function getValidContentHeight(styles) {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
       throw new Error('Textarea ref is not defined');
     }
-    var padding = parsePxToNumber(styles.padding);
-    var paddingTop = parsePxToNumber(styles.paddingTop);
-    var paddingBottom = parsePxToNumber(styles.paddingBottom);
-    return textareaRef.current.clientHeight - (padding ? padding * 2 : paddingTop + paddingBottom) + 'px';
-  }, [textareaRef]);
+    var borderWidth = parsePxToNumber(styles.borderWidth);
+    parsePxToNumber(styles.padding);
+    parsePxToNumber(styles.paddingTop);
+    parsePxToNumber(styles.paddingBottom);
+    return textareaRef.current.clientHeight + 2 * borderWidth + 'px';
+  };
   var resizeObserver = useMemo(function () {
     return new ResizeObserver(function () {
       if (!mirroredRef.current || !textareaRef.current) return;
@@ -82,7 +84,7 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
   var overwriteStyleToMirroredRef = useCallback(function (style) {
     if (!mirroredRef.current || !textareaRef.current) return;
     var textareaStyles = getComputedStyle(textareaRef.current);
-    ['border', 'boxSizing', 'fontFamily', 'fontSize', 'fontWeight', 'letterSpacing', 'lineHeight', 'padding', 'textDecoration', 'textIndent', 'textTransform', 'whiteSpace', 'wordSpacing', 'wordWrap', 'textAlign'].forEach(function (p) {
+    ['border', 'boxSizing', 'fontFamily', 'fontSize', 'fontWeight', 'letterSpacing', 'lineHeight', 'padding', 'textDecoration', 'textIndent', 'textTransform', 'whiteSpace', 'wordSpacing', 'wordWrap', 'textAlign', 'borderRadius'].forEach(function (p) {
       if (!mirroredRef.current) return;
       var property = snakeToCamel(p);
       // @ts-ignore
@@ -115,13 +117,18 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
 };
 
 var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
-  var style = _a.style,
+  var containerStyle = _a.containerStyle,
+    textareaStyle = _a.textareaStyle,
+    _a$containerClassName = _a.containerClassName,
+    containerClassName = _a$containerClassName === void 0 ? '' : _a$containerClassName,
+    _a$textareaClassName = _a.textareaClassName,
+    textareaClassName = _a$textareaClassName === void 0 ? '' : _a$textareaClassName,
     linkTarget = _a.linkTarget,
     _a$fontColor = _a.fontColor,
     fontColor = _a$fontColor === void 0 ? 'black' : _a$fontColor,
     _a$caretColor = _a.caretColor,
     caretColor = _a$caretColor === void 0 ? 'black' : _a$caretColor,
-    rest = __rest(_a, ["style", "linkTarget", "fontColor", "caretColor"]);
+    rest = __rest(_a, ["containerStyle", "textareaStyle", "containerClassName", "textareaClassName", "linkTarget", "fontColor", "caretColor"]);
   var textareaRef = useRef(null);
   var mirroredRef = useRef(null);
   var _useTextarea = useMirrorTextarea(textareaRef, mirroredRef),
@@ -131,8 +138,8 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
     overwireTextToMirroredRef = _useTextarea.overwireTextToMirroredRef;
   useEffect(function () {
     overwireTextToMirroredRef();
-    overwriteStyleToMirroredRef(style);
-  }, [overwireTextToMirroredRef, overwriteStyleToMirroredRef, style]);
+    overwriteStyleToMirroredRef(textareaStyle);
+  }, [overwireTextToMirroredRef, overwriteStyleToMirroredRef, textareaStyle]);
   useEffect(function () {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;
     resizeObserver.observe(textareaRef.current);
@@ -160,10 +167,10 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   }, [textareaRef, mirroredRef, linkTarget, setLinkifyStr]);
   return jsx(Fragment, {
     children: jsxs("div", {
-      className: "container",
-      style: {
+      className: "container ".concat(containerClassName),
+      style: Object.assign(Object.assign({}, containerStyle), {
         position: 'relative'
-      },
+      }),
       children: [jsx("textarea", Object.assign({
         ref: function ref(node) {
           textareaRef.current = node;
@@ -173,10 +180,12 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
             forwardedRef.current = node;
           }
         },
-        className: "container__textarea ".concat(rest.className),
+        className: "container__textarea ".concat(textareaClassName),
         style: Object.assign(Object.assign({
+          width: '100%',
+          height: '100%',
           caretColor: caretColor
-        }, style), {
+        }, textareaStyle), {
           color: 'transparent',
           position: 'relative'
         })
