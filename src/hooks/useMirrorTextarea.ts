@@ -7,10 +7,10 @@ import {
 } from 'react';
 import {parsePxToNumber, snakeToCamel} from '../util';
 
-import {LinkTargetType} from '../Textarea';
+import {LinkTargetType} from '../LinkingTextarea';
 import linkifyStr from 'linkify-string';
 
-const useTextarea = (
+const useMirrorTextarea = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
   mirroredRef: RefObject<HTMLDivElement>,
 ) => {
@@ -130,4 +130,4 @@ const useTextarea = (
   };
 };
 
-export default useTextarea;
+export default useMirrorTextarea;

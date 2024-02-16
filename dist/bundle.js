@@ -52,7 +52,7 @@ var parsePxToNumber = function parsePxToNumber(value) {
   return value.endsWith('px') ? parseInt(value.slice(0, -2), 10) : 0;
 };
 
-var useTextarea = function useTextarea(textareaRef, mirroredRef) {
+var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
   var getValidContentWidth = useCallback(function (styles) {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
       throw new Error('Textarea ref is not defined');
@@ -114,7 +114,7 @@ var useTextarea = function useTextarea(textareaRef, mirroredRef) {
   };
 };
 
-var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
+var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   var style = _a.style,
     linkTarget = _a.linkTarget,
     _a$fontColor = _a.fontColor,
@@ -124,7 +124,7 @@ var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
     rest = __rest(_a, ["style", "linkTarget", "fontColor", "caretColor"]);
   var textareaRef = useRef(null);
   var mirroredRef = useRef(null);
-  var _useTextarea = useTextarea(textareaRef, mirroredRef),
+  var _useTextarea = useMirrorTextarea(textareaRef, mirroredRef),
     resizeObserver = _useTextarea.resizeObserver,
     overwriteStyleToMirroredRef = _useTextarea.overwriteStyleToMirroredRef,
     setLinkifyStr = _useTextarea.setLinkifyStr,
@@ -200,5 +200,5 @@ var Textarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   });
 });
 
-export { Textarea as default };
+export { LinkingTextarea as default };
 //# sourceMappingURL=bundle.js.map

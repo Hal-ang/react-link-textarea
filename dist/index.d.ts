@@ -3,12 +3,12 @@ import { CSSProperties, TextareaHTMLAttributes } from 'react';
 
 type TextareaAttributes = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'style'>;
 type LinkTargetType = '_blank' | '_self' | '_parent' | '_top' | string;
-interface TextareaInterface extends TextareaAttributes {
+interface LinkingTextareaInterface extends TextareaAttributes {
     style?: CSSProperties;
     linkTarget?: LinkTargetType;
     fontColor?: CSSProperties['color'];
     caretColor?: CSSProperties['caretColor'];
 }
-declare const Textarea: react.ForwardRefExoticComponent<TextareaInterface & react.RefAttributes<HTMLTextAreaElement>>;
+declare const LinkingTextarea: react.ForwardRefExoticComponent<LinkingTextareaInterface & react.RefAttributes<HTMLTextAreaElement>>;
 
-export { Textarea as default };
+export { LinkingTextarea as default };

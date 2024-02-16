@@ -1,3 +1,3 @@
-import Textarea from './Textarea';
+import LinkingTextarea from './LinkingTextarea';
 
-export default Textarea;
+export default LinkingTextarea;

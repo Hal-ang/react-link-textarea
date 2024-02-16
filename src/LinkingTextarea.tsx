@@ -9,21 +9,21 @@ import {
   useRef,
 } from 'react';
 
-import useTextarea from './hooks/useTextarea';
+import useTextarea from './hooks/useMirrorTextarea';
 
 type TextareaAttributes = Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   'style'
 >;
 export type LinkTargetType = '_blank' | '_self' | '_parent' | '_top' | string;
-interface TextareaInterface extends TextareaAttributes {
+interface LinkingTextareaInterface extends TextareaAttributes {
   style?: CSSProperties;
   linkTarget?: LinkTargetType;
   fontColor?: CSSProperties['color'];
   caretColor?: CSSProperties['caretColor'];
 }
 
-const Textarea = forwardRef(
+const LinkingTextarea = forwardRef(
   (
     {
       style,
@@ -31,7 +31,7 @@ const Textarea = forwardRef(
       fontColor = 'black',
       caretColor = 'black',
       ...rest
-    }: TextareaInterface,
+    }: LinkingTextareaInterface,
     forwardedRef: ForwardedRef<HTMLTextAreaElement>,
   ) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -126,4 +126,4 @@ const Textarea = forwardRef(
   },
 );
 
-export default Textarea;
+export default LinkingTextarea;

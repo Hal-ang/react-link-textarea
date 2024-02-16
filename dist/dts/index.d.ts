@@ -1,2 +1,2 @@
-import Textarea from './Textarea';
-export default Textarea;
+import LinkingTextarea from './LinkingTextarea';
+export default LinkingTextarea;
