@@ -1,6 +1,6 @@
 {
   "name": "react-link-textarea",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "./dist/bundle.js",
   "types": "./dist/index.d.ts",
@@ -11,7 +11,7 @@
     "watch": "rollup -cw"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
