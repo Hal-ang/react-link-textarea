@@ -1,16 +1,33 @@
 {
   "name": "react-link-textarea",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.3",
+  "keywords": [
+    "react",
+    "typescript",
+    "textarea",
+    "hyperlink",
+    "react-component",
+    "link",
+    "linkify-string",
+    "linkify-react"
+  ],
+  "description": "Enhancing UX by breaking the limitations of original textarea tag, supports link integration and offers flexible styling options.",
+  "homepage": "https://github.com/Hal-ang/react-link-textarea#readme",
   "main": "./dist/bundle.js",
   "types": "./dist/index.d.ts",
   "type": "module",
+  "bugs": {
+    "url": "https://github.com/Hal-ang/react-link-textarea/issues",
+    "email": "jhrang0925@gmail.com"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
     "watch": "rollup -cw"
   },
-  "author": "",
+  "author": "Hal-ang",
+  "email": "jhrang0925@gmail.com",
+  "url": "https://deemmun.tistory.com",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
