@@ -1,18 +1,16 @@
-
 <h1 align="center">react-link-textarea</h1>
   
 <p align="center">
 <img src="https://github.com/Hal-ang/react-link-textarea/assets/68503014/c1a279f1-bb73-425d-a50e-718325c16657" />
-  
+
 
 <p align="center">
 <img alt="Launched?" src="https://img.shields.io/badge/typescript-yes-green.svg" />
 <img alt="react-^18.2.0" src="https://img.shields.io/badge/react-^18.2.0-3f72af" />
 </p>
 
-
 <p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-v1.0.1-blue.svg?cacheSeconds=2592000" />
+<img alt="Version" src="https://img.shields.io/badge/version-v1.0.3-blue.svg?cacheSeconds=2592000" />
 
 <br>
 <p align="center">Helper component for a `textarea` tag that allows `a` tag link connection and interaction</p>
@@ -40,6 +38,7 @@ npm install react-textarea-link
 ## Usage
 
 ### First step
+
 ```JSX
 ...
 import LinkingTextarea from 'react-link-textarea'; // needs importing
@@ -48,10 +47,10 @@ const Component = () => {
   ...
 }
 ```
+
 <br>
 
 ### Basic usage
-
 
 <img src="https://github.com/codestates/soundWave_Server/assets/68503014/4739a9fc-e97e-4bbf-a0da-702509f7a33a"/>
 
@@ -73,6 +72,7 @@ const Section = () => {
 
 export default Section;
 ```
+
 <br>
 
 ### With TailwindCSS
@@ -99,6 +99,7 @@ const Section = () => {
   );
 };
 ```
+
 <br>
 
 ### With inline style
@@ -125,11 +126,13 @@ const Section = () => {
   );
 };
 ```
+
 <br>
 
 ---
 
 ## Props API
+
 ```
 ref                             --> HTMLTextAreaElement Ref is here, You can handle the textarea value and interaction.
 
@@ -164,7 +167,6 @@ autoComplete
 --> 🚨 Among the basic JSX textarea properties, only `style` and `className` are not accepted.
 
 ```
-
 
 ## Example
 
