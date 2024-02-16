@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "declaration": true,
+    "target": "es2015",
     "module": "esnext",
     "jsx": "react-jsx",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "dist/dts",
+    "emitDeclarationOnly": true,
     "strict": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
