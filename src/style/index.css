@@ -1,12 +1,12 @@
-a:link {
-  color: #0000ee !important;
+.container__mirror a:link {
+    color: #0000ee !important;
 }
 
-a:visited {
-  color: #551a8b !important;
+.container__mirror a:visited {
+    color: #551a8b !important;
 }
 
 .container__mirror a {
-  pointer-events: auto !important;
-  text-decoration: underline;
+    pointer-events: auto !important;
+    text-decoration: underline;
 }
