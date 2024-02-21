@@ -3,14 +3,13 @@
 <p align="center">
 <img src="https://github.com/Hal-ang/react-link-textarea/assets/68503014/c1a279f1-bb73-425d-a50e-718325c16657" />
 
-
 <p align="center">
 <img alt="Launched?" src="https://img.shields.io/badge/typescript-yes-green.svg" />
 <img alt="react-^18.2.0" src="https://img.shields.io/badge/react-^18.2.0-3f72af" />
 </p>
 
 <p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-v1.0.3-blue.svg?cacheSeconds=2592000" />
+<img alt="Version" src="https://img.shields.io/badge/version-v1.1.0-blue.svg?cacheSeconds=2592000" />
 
 <br>
 <p align="center">Helper component for a `textarea` tag that allows `a` tag link connection and interaction</p>
@@ -60,9 +59,6 @@ const Component = () => {
 const Section = () => {
   return (
     <>
-      <p>
-        Textarea
-      </p>
       <div>
         <LinkingTextarea/>
       </div>
@@ -84,9 +80,6 @@ Use `containerClassName` and `textareaClassName`.
 const Section = () => {
   return (
     <>
-      <p className="text-white text-25 ml-30 mt-20 mb-10">
-        Textarea
-      </p>
       <div className="w-full px-30 min-h-150">
         <LinkingTextarea
           containerClassName="w-full h-full"
@@ -108,7 +101,6 @@ const Section = () => {
 const Section = () => {
   return (
     <>
-      <p style={{fontSize: 25, marginTop: 20, marginBottom: 10}}>Textarea</p>
       <div
         style={{
           width: '100%',
