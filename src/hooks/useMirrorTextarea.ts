@@ -3,30 +3,30 @@ import {
   MutableRefObject,
   RefObject,
   useCallback,
-  useMemo,
-} from 'react';
-import {parsePxToNumber, snakeToCamel} from '../util';
+  useMemo
+} from "react";
+import { parsePxToNumber, snakeToCamel } from "../util";
 
-import {LinkTargetType} from '../LinkingTextarea';
-import linkifyStr from 'linkify-string';
+import { LinkTargetType } from "../LinkingTextarea";
+import linkifyStr from "linkify-string";
 
 const useMirrorTextarea = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
-  mirroredRef: RefObject<HTMLDivElement>,
+  mirroredRef: RefObject<HTMLDivElement>
 ) => {
   const getValidContentWidth = (styles: CSSStyleDeclaration) => {
     if (!textareaRef?.current) {
-      throw new Error('Textarea ref is not defined');
+      throw new Error("Textarea ref is not defined");
     }
     const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientWidth + 2 * borderWidth + 'px';
+    return textareaRef.current.clientWidth + 2 * borderWidth + "px";
   };
   const getValidContentHeight = (styles: CSSStyleDeclaration) => {
     if (!textareaRef?.current) {
-      throw new Error('Textarea ref is not defined');
+      throw new Error("Textarea ref is not defined");
     }
     const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientHeight + 2 * borderWidth + 'px';
+    return textareaRef.current.clientHeight + 2 * borderWidth + "px";
   };
 
   const resizeObserver = useMemo(() => {
@@ -47,22 +47,22 @@ const useMirrorTextarea = (
       const textareaStyles = getComputedStyle(textareaRef.current);
 
       [
-        'border',
-        'boxSizing',
-        'fontFamily',
-        'fontSize',
-        'fontWeight',
-        'letterSpacing',
-        'lineHeight',
-        'padding',
-        'textDecoration',
-        'textIndent',
-        'textTransform',
-        'whiteSpace',
-        'wordSpacing',
-        'wordWrap',
-        'textAlign',
-        'borderRadius',
+        "border",
+        "boxSizing",
+        "fontFamily",
+        "fontSize",
+        "fontWeight",
+        "letterSpacing",
+        "lineHeight",
+        "padding",
+        "textDecoration",
+        "textIndent",
+        "textTransform",
+        "whiteSpace",
+        "wordSpacing",
+        "wordWrap",
+        "textAlign",
+        "borderRadius"
       ].forEach((p: string) => {
         if (!mirroredRef.current) return;
 
@@ -72,7 +72,7 @@ const useMirrorTextarea = (
         mirroredRef.current.style[property] = textareaStyles[property];
       });
 
-      mirroredRef.current.style.borderColor = 'transparent';
+      mirroredRef.current.style.borderColor = "transparent";
 
       if (style?.color) {
         mirroredRef.current.style.color = style.color;
@@ -81,31 +81,28 @@ const useMirrorTextarea = (
         mirroredRef.current.style.backgroundColor = style.backgroundColor;
       }
     },
-    [mirroredRef, textareaRef],
+    [mirroredRef, textareaRef]
   );
 
-  const setLinkifyStr = useCallback(
-    (linkTarget?: LinkTargetType) => {
-      if (!mirroredRef?.current || !textareaRef.current) return;
+  const setLinkifyStr = (linkTarget?: LinkTargetType) => {
+    if (!mirroredRef?.current || !textareaRef.current) return;
 
-      mirroredRef.current.innerHTML = linkifyStr(textareaRef.current.value, {
-        target: linkTarget || '_blank',
-      });
-    },
-    [linkifyStr, mirroredRef],
-  );
+    mirroredRef.current.innerHTML = linkifyStr(textareaRef.current.value, {
+      target: linkTarget || "_blank"
+    });
+  };
 
-  const overwireTextToMirroredRef = useCallback(() => {
+  const overwireTextToMirroredRef = () => {
     if (!textareaRef?.current || !mirroredRef?.current) return;
 
     mirroredRef.current.textContent = textareaRef.current.value;
-  }, [textareaRef, mirroredRef]);
+  };
 
   return {
     resizeObserver,
     overwriteStyleToMirroredRef,
     setLinkifyStr,
-    overwireTextToMirroredRef,
+    overwireTextToMirroredRef
   };
 };
 
