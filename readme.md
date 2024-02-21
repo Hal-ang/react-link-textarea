@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-v1.1.0-blue.svg?cacheSeconds=2592000" />
+<img alt="Version" src="https://img.shields.io/badge/version-v1.1.1-blue.svg?cacheSeconds=2592000" />
 
 <br>
 <p align="center">Helper component for a `textarea` tag that allows `a` tag link connection and interaction</p>
