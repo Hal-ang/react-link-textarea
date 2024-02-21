@@ -1,6 +1,6 @@
 {
   "name": "react-link-textarea",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "keywords": [
     "react",
     "typescript",
@@ -9,7 +9,8 @@
     "react-component",
     "link",
     "linkify-string",
-    "linkify-react"
+    "linkify-react",
+    "tailwindCSS"
   ],
   "description": "Enhancing UX by breaking the limitations of original textarea tag, supports link integration and offers flexible styling options.",
   "homepage": "https://github.com/Hal-ang/react-link-textarea#readme",
