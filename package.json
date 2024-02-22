@@ -14,7 +14,10 @@
   ],
   "description": "Enhancing UX by breaking the limitations of original textarea tag, supports link integration and offers flexible styling options.",
   "homepage": "https://github.com/Hal-ang/react-link-textarea#readme",
-  "main": "./dist/bundle.js",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "types": "./dist/index.d.ts",
   "type": "module",
   "bugs": {
