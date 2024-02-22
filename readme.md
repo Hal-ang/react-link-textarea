@@ -40,6 +40,7 @@ npm install react-textarea-link
 
 ```JSX
 ...
+"use client" // Add if you use next.js.
 import LinkingTextarea from 'react-link-textarea'; // needs importing
 
 const Component = () => {
