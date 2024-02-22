@@ -1,8 +1,6 @@
-'use strict';
-
-var jsxRuntime = require('react/jsx-runtime');
-var react = require('react');
-var linkifyStr = require('linkify-string');
+import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
+import { useMemo, useCallback, forwardRef, useRef, useEffect } from 'react';
+import linkifyStr from 'linkify-string';
 
 function __rest(s, e) {
   var t = {};
@@ -69,7 +67,7 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
     var borderWidth = parsePxToNumber(styles.borderWidth);
     return textareaRef.current.clientHeight + 2 * borderWidth + "px";
   };
-  var resizeObserver = react.useMemo(function () {
+  var resizeObserver = useMemo(function () {
     return new ResizeObserver(function () {
       if (!mirroredRef.current || !textareaRef.current) return;
       var textareaStyles = getComputedStyle(textareaRef.current);
@@ -77,7 +75,7 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
       mirroredRef.current.style.height = getValidContentHeight(textareaStyles);
     });
   }, [textareaRef, mirroredRef, getValidContentWidth, getValidContentHeight]);
-  var overwriteStyleToMirroredRef = react.useCallback(function (style) {
+  var overwriteStyleToMirroredRef = useCallback(function (style) {
     if (!mirroredRef.current || !textareaRef.current) return;
     var textareaStyles = getComputedStyle(textareaRef.current);
     ["border", "boxSizing", "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight", "padding", "textDecoration", "textIndent", "textTransform", "whiteSpace", "wordSpacing", "wordWrap", "textAlign", "borderRadius"].forEach(function (p) {
@@ -112,7 +110,7 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
   };
 };
 
-var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) {
+var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   var containerStyle = _a.containerStyle,
     textareaStyle = _a.textareaStyle,
     _a$containerClassName = _a.containerClassName,
@@ -125,26 +123,26 @@ var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) 
     _a$caretColor = _a.caretColor,
     caretColor = _a$caretColor === void 0 ? "black" : _a$caretColor,
     rest = __rest(_a, ["containerStyle", "textareaStyle", "containerClassName", "textareaClassName", "linkTarget", "fontColor", "caretColor"]);
-  var textareaRef = react.useRef(null);
-  var mirroredRef = react.useRef(null);
+  var textareaRef = useRef(null);
+  var mirroredRef = useRef(null);
   var _useMirrorTextarea = useMirrorTextarea(textareaRef, mirroredRef),
     resizeObserver = _useMirrorTextarea.resizeObserver,
     overwriteStyleToMirroredRef = _useMirrorTextarea.overwriteStyleToMirroredRef,
     setLinkifyStr = _useMirrorTextarea.setLinkifyStr,
     overwireTextToMirroredRef = _useMirrorTextarea.overwireTextToMirroredRef;
-  react.useEffect(function () {
+  useEffect(function () {
     overwireTextToMirroredRef();
     overwriteStyleToMirroredRef(textareaStyle);
     setLinkifyStr(linkTarget);
   }, [textareaStyle, overwireTextToMirroredRef]);
-  react.useEffect(function () {
+  useEffect(function () {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;
     resizeObserver.observe(textareaRef.current);
     return function () {
       resizeObserver.disconnect();
     };
   }, [textareaRef, resizeObserver]);
-  react.useEffect(function () {
+  useEffect(function () {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current) || !(mirroredRef === null || mirroredRef === void 0 ? void 0 : mirroredRef.current)) return;
     var handleScrollTop = function handleScrollTop() {
       if (!textareaRef.current || !mirroredRef.current) return;
@@ -161,13 +159,13 @@ var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) 
       (_b = textareaRef.current) === null || _b === void 0 ? void 0 : _b.removeEventListener("input", convertToLink);
     };
   }, [textareaRef, mirroredRef, linkTarget]);
-  return jsxRuntime.jsx(jsxRuntime.Fragment, {
-    children: jsxRuntime.jsxs("div", {
+  return jsx(Fragment, {
+    children: jsxs("div", {
       className: "link-textarea-container ".concat(containerClassName),
       style: Object.assign(Object.assign({}, containerStyle), {
         position: "relative"
       }),
-      children: [jsxRuntime.jsx("textarea", Object.assign({
+      children: [jsx("textarea", Object.assign({
         ref: function ref(node) {
           textareaRef.current = node;
           if (typeof forwardedRef === "function") {
@@ -185,7 +183,7 @@ var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) 
           color: "transparent",
           position: "relative"
         })
-      }, rest)), jsxRuntime.jsx("div", {
+      }, rest)), jsx("div", {
         className: "link-textarea-container__mirror",
         ref: mirroredRef,
         style: {
@@ -205,5 +203,5 @@ var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) 
   });
 });
 
-module.exports = LinkingTextarea;
+export { LinkingTextarea as default };
 //# sourceMappingURL=bundle.js.map

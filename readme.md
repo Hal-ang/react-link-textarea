@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-v1.1.2-blue.svg?cacheSeconds=2592000" />
+<img alt="Version" src="https://img.shields.io/badge/version-v1.1.3-blue.svg?cacheSeconds=2592000" />
 
 <br>
 <p align="center">Helper component for a `textarea` tag that allows `a` tag link connection and interaction</p>
@@ -40,6 +40,7 @@ npm install react-textarea-link
 
 ```JSX
 ...
+"use client" // Add if you use next.js.
 import LinkingTextarea from 'react-link-textarea'; // needs importing
 
 const Component = () => {
