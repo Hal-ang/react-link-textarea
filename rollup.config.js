@@ -13,12 +13,12 @@ export default [
     input: "./src/index.ts",
     output: [
       {
-        file: "./dist/bundle.mjs",
+        file: "./dist/esm/bundle.js",
         format: "es",
         sourcemap: true
       },
       {
-        file: "./dist/bundle.cjs",
+        file: "./dist/bundle.js",
         format: "cjs",
         sourcemap: true
       }

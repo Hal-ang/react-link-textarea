@@ -204,4 +204,4 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
 });
 
 export { LinkingTextarea as default };
-//# sourceMappingURL=bundle.mjs.map
+//# sourceMappingURL=bundle.js.map

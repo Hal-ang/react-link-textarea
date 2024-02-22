@@ -1,6 +1,6 @@
 {
   "name": "react-link-textarea",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "keywords": [
     "react",
     "typescript",
@@ -14,11 +14,15 @@
   ],
   "description": "Enhancing UX by breaking the limitations of original textarea tag, supports link integration and offers flexible styling options.",
   "homepage": "https://github.com/Hal-ang/react-link-textarea#readme",
+  "main": "./dist/bundle.js",
+  "module": "./dist/esm/bundle.js",
   "exports": {
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    ".": {
+      "require": "./dist/bundle.js",
+      "import": "./dist/esm/bundle.js",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "types": "./dist/index.d.ts",
   "type": "module",
   "bugs": {
     "url": "https://github.com/Hal-ang/react-link-textarea/issues",
