@@ -19,7 +19,9 @@ jobs:
           node-version: "20" # Node.js 버전 20으로 설정
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          rm -rf package-lock.json
+          npm install
 
       - name: Build
         run: npm run build
