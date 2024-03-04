@@ -14,39 +14,37 @@ const useMirrorTextarea = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
   mirroredRef: RefObject<HTMLDivElement>
 ) => {
-  const getValidContentWidth = (styles: CSSStyleDeclaration) => {
+  const getContentAreaSize = (styles: CSSStyleDeclaration) => {
     if (!textareaRef?.current) {
       throw new Error("Textarea ref is not defined");
     }
-    const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientWidth + 2 * borderWidth + "px";
-  };
-  const getValidContentHeight = (styles: CSSStyleDeclaration) => {
-    if (!textareaRef?.current) {
-      throw new Error("Textarea ref is not defined");
-    }
-    const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientHeight + 2 * borderWidth + "px";
+    const borderWidths = parsePxToNumber(styles.borderWidth) * 2;
+    const { clientWidth, clientHeight } = textareaRef.current;
+
+    return {
+      width: clientWidth + borderWidths + "px",
+      height: clientHeight + borderWidths + "px"
+    };
   };
 
   const resizeObserver = useMemo(() => {
     return new ResizeObserver(() => {
       if (!mirroredRef.current || !textareaRef.current) return;
 
-      const textareaStyles = getComputedStyle(textareaRef.current);
+      const { width, height } = getContentAreaSize(
+        getComputedStyle(textareaRef.current)
+      );
 
-      mirroredRef.current.style.width = getValidContentWidth(textareaStyles);
-      mirroredRef.current.style.height = getValidContentHeight(textareaStyles);
+      mirroredRef.current.style.width = width;
+      mirroredRef.current.style.height = height;
     });
-  }, [textareaRef, mirroredRef, getValidContentWidth, getValidContentHeight]);
+  }, [textareaRef, mirroredRef, getContentAreaSize]);
 
-  const overwriteStyleToMirroredRef = useCallback(
+  const applyStyleToMirroredRef = useCallback(
     (style?: CSSProperties) => {
-      if (!mirroredRef.current || !textareaRef.current) return;
+      if (!mirroredRef?.current || !textareaRef?.current) return;
 
-      const textareaStyles = getComputedStyle(textareaRef.current);
-
-      [
+      const stylesToCopy = [
         "border",
         "boxSizing",
         "fontFamily",
@@ -63,9 +61,10 @@ const useMirrorTextarea = (
         "wordWrap",
         "textAlign",
         "borderRadius"
-      ].forEach((p: string) => {
-        if (!mirroredRef.current) return;
+      ];
+      const textareaStyles = getComputedStyle(textareaRef.current);
 
+      stylesToCopy.forEach((p: string) => {
         const property = snakeToCamel(p);
 
         // @ts-ignore
@@ -92,7 +91,7 @@ const useMirrorTextarea = (
     });
   };
 
-  const overwireTextToMirroredRef = () => {
+  const copyTextToMirroredRef = () => {
     if (!textareaRef?.current || !mirroredRef?.current) return;
 
     mirroredRef.current.textContent = textareaRef.current.value;
@@ -100,9 +99,9 @@ const useMirrorTextarea = (
 
   return {
     resizeObserver,
-    overwriteStyleToMirroredRef,
+    applyStyleToMirroredRef,
     setLinkifyStr,
-    overwireTextToMirroredRef
+    copyTextToMirroredRef
   };
 };
 
