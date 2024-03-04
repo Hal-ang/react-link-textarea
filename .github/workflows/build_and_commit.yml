@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # 모든 히스토리와 태그를 가져옵니다
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
