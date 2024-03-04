@@ -18,6 +18,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18" # 원하는 Node.js 버전을 설정
+          registry-url: "https://registry.npmjs.org/" # npm 배포를 위해 필요
 
       - name: Install dependencies
         run: npm install
@@ -27,12 +28,18 @@ jobs:
           git config --global user.name 'Hal-ang'
           git config --global user.email 'jpjgv05@gmail.com'
 
+      - name: Commit Build Files
+        run: |
+          npm run build
+          git add .
+          git commit -m "chore: build for release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
       - name: Run release
         run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          # GITHUB_TOKEN 대신 PERSONAL_ACCESS_TOKEN을 사용하는 경우
-          # 해당 토큰은 GitHub에 미리 설정되어 있어야 합니다.
 
       - name: Push changes
         run: |
@@ -40,3 +47,8 @@ jobs:
           git push origin master --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      # - name: Publish to npm
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
