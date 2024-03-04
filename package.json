@@ -33,7 +33,8 @@
     "prebuild": "rm -rf dist",
     "build": "rollup -c",
     "watch": "rollup -cw",
-    "cz": "git-cz"
+    "commit": "git-cz",
+    "release": "standard-version"
   },
   "author": "Hal-ang",
   "email": "jhrang0925@gmail.com",
