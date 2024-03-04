@@ -7,7 +7,7 @@ import {
 } from "react";
 import { parsePxToNumber, snakeToCamel } from "../util";
 
-import { LinkTargetType } from "../LinkingTextarea";
+import { LinkTargetType } from "../types";
 import linkifyStr from "linkify-string";
 
 const useMirrorTextarea = (
@@ -27,18 +27,20 @@ const useMirrorTextarea = (
     };
   };
 
-  const resizeObserver = useMemo(() => {
-    return new ResizeObserver(() => {
-      if (!mirroredRef.current || !textareaRef.current) return;
+  const resizeObserver = useMemo(
+    () =>
+      new ResizeObserver(() => {
+        if (!mirroredRef.current || !textareaRef.current) return;
 
-      const { width, height } = getContentAreaSize(
-        getComputedStyle(textareaRef.current)
-      );
+        const { width, height } = getContentAreaSize(
+          getComputedStyle(textareaRef.current)
+        );
 
-      mirroredRef.current.style.width = width;
-      mirroredRef.current.style.height = height;
-    });
-  }, [textareaRef, mirroredRef, getContentAreaSize]);
+        mirroredRef.current.style.width = width;
+        mirroredRef.current.style.height = height;
+      }),
+    [textareaRef, mirroredRef, getContentAreaSize]
+  );
 
   const applyStyleToMirroredRef = useCallback(
     (style?: CSSProperties) => {
@@ -83,11 +85,11 @@ const useMirrorTextarea = (
     [mirroredRef, textareaRef]
   );
 
-  const setLinkifyStr = (linkTarget?: LinkTargetType) => {
+  const setLinkifyText = (linkTarget: LinkTargetType) => {
     if (!mirroredRef?.current || !textareaRef.current) return;
 
     mirroredRef.current.innerHTML = linkifyStr(textareaRef.current.value, {
-      target: linkTarget || "_blank"
+      target: linkTarget
     });
   };
 
@@ -100,7 +102,7 @@ const useMirrorTextarea = (
   return {
     resizeObserver,
     applyStyleToMirroredRef,
-    setLinkifyStr,
+    setLinkifyText,
     copyTextToMirroredRef
   };
 };

@@ -1,50 +1,18 @@
 import "./style/index.css";
 
-import {
-  CSSProperties,
-  ForwardedRef,
-  TextareaHTMLAttributes,
-  forwardRef,
-  useEffect,
-  useRef
-} from "react";
+import { ForwardedRef, forwardRef, useEffect, useRef } from "react";
 
+import { LinkingTextareaInterface } from "./types";
 import useMirrorTextarea from "./hooks/useMirrorTextarea";
-
-type TextareaAttributes = Omit<
-  TextareaHTMLAttributes<HTMLTextAreaElement>,
-  "style" | "className"
->;
-export type LinkTargetType = "_blank" | "_self" | "_parent" | "_top" | string;
-
-export interface ContainerCustomInterface {
-  containerStyle?: CSSProperties;
-  containerClassName?: string;
-}
-
-export interface TextareaCustomInterface extends TextareaAttributes {
-  textareaStyle?: CSSProperties;
-  textareaClassName?: string;
-  caretColor?: CSSProperties["caretColor"];
-}
-export interface MirrorCustomInterface {
-  linkTarget?: LinkTargetType;
-  fontColor?: CSSProperties["color"];
-}
-
-export interface LinkingTextareaInterface
-  extends ContainerCustomInterface,
-    TextareaCustomInterface,
-    MirrorCustomInterface {}
 
 const LinkingTextarea = forwardRef(
   (
     {
-      containerStyle,
-      textareaStyle,
+      containerStyle = {},
+      textareaStyle = {},
       containerClassName = "",
       textareaClassName = "",
-      linkTarget,
+      linkTarget = "_blank",
       fontColor = "black",
       caretColor = "black",
       ...rest
@@ -57,7 +25,7 @@ const LinkingTextarea = forwardRef(
     const {
       resizeObserver,
       applyStyleToMirroredRef,
-      setLinkifyStr,
+      setLinkifyText,
       copyTextToMirroredRef
     } = useMirrorTextarea(textareaRef, mirroredRef);
 
@@ -84,7 +52,7 @@ const LinkingTextarea = forwardRef(
       };
 
       const convertToLink = () => {
-        setLinkifyStr(linkTarget);
+        setLinkifyText(linkTarget);
       };
 
       textareaRef.current.addEventListener("scroll", handleScrollTop);
@@ -94,7 +62,7 @@ const LinkingTextarea = forwardRef(
         textareaRef.current?.removeEventListener("scroll", handleScrollTop);
         textareaRef.current?.removeEventListener("input", convertToLink);
       };
-    }, [textareaRef, mirroredRef, linkTarget, setLinkifyStr]);
+    }, [textareaRef, mirroredRef, linkTarget, setLinkifyText]);
 
     return (
       <div
@@ -122,8 +90,8 @@ const LinkingTextarea = forwardRef(
           {...rest}
         />
         <div
-          className="link-textarea-container__mirror"
           ref={mirroredRef}
+          className="link-textarea-container__mirror"
           style={{
             color: fontColor,
             width: "100%",
