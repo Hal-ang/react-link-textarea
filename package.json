@@ -1,6 +1,6 @@
 {
   "name": "react-link-textarea",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "keywords": [
     "react",
     "typescript",
@@ -32,7 +32,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "rm -rf dist",
     "build": "rollup -c",
-    "watch": "rollup -cw"
+    "watch": "rollup -cw",
+    "commit": "git-cz",
+    "release": "standard-version"
   },
   "author": "Hal-ang",
   "email": "jhrang0925@gmail.com",
@@ -52,15 +54,21 @@
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.17",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "postcss-import": "^16.0.1",
     "rollup": "^4.11.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "standard-version": "^9.5.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "linkify-string": "^4.1.3"
+  },
+  "commitizen": {
+    "path": "cz-conventional-changelog"
   }
 }
