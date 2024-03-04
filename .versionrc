@@ -1,0 +1,44 @@
+{
+  "types": [
+    {
+      "type": "feat",
+      "section": "Features",
+      "hidden": false
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes",
+      "hidden": false
+    },
+    {
+      "type": "test",
+      "section": "Tests",
+      "hidden": true
+    },
+    {
+      "type": "build",
+      "section": "Build System",
+      "hidden": true
+    },
+    {
+      "type": "chore",
+      "section": "Others",
+      "hidden": false
+    },
+    {
+      "type": "docs",
+      "section": "Docs",
+      "hidden": false
+    },
+    {
+      "type": "style",
+      "section": "Styling",
+      "hidden": false
+    },
+    {
+      "type": "refactor",
+      "section": "Code Refactoring",
+      "hidden": false
+    }
+  ]
+}
