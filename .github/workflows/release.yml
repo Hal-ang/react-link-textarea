@@ -28,14 +28,6 @@ jobs:
           git config --global user.name 'Hal-ang'
           git config --global user.email 'jpjgv05@gmail.com'
 
-      - name: Commit Build Files
-        run: |
-          npm run build
-          git add .
-          git commit -m "chore: build for release"
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-
       - name: Run release
         run: npm run release
         env:
