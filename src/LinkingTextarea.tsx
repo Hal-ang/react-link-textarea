@@ -32,6 +32,7 @@ const LinkingTextarea = forwardRef(
     useEffect(() => {
       copyTextToMirroredRef();
       applyStyleToMirroredRef(textareaStyle);
+      setLinkifyText(linkTarget);
     }, [textareaStyle, copyTextToMirroredRef]);
 
     useEffect(() => {
