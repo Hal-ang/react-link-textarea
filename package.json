@@ -36,7 +36,8 @@
     "commit": "git-cz",
     "release": "standard-version",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "tailwind:watch": "npx tailwindcss -i ./src/style/index.css -o ./src/style/output.css --watch "
   },
   "author": "Hal-ang",
   "email": "jhrang0925@gmail.com",
