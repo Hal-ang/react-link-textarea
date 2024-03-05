@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .link-textarea-container__mirror a:link {
   color: #0000ee !important;
 }

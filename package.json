@@ -36,8 +36,7 @@
     "commit": "git-cz",
     "release": "standard-version",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "tailwind:watch": "npx tailwindcss -i ./src/style/index.css -o ./src/style/output.css --watch "
+    "build-storybook": "storybook build"
   },
   "author": "Hal-ang",
   "email": "jhrang0925@gmail.com",
@@ -76,7 +75,6 @@
     "rollup-plugin-postcss": "^4.0.2",
     "standard-version": "^9.5.0",
     "storybook": "^7.6.17",
-    "tailwindcss": "^3.4.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
