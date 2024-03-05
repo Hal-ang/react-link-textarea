@@ -86,7 +86,6 @@ const useMirrorTextarea = (
         "borderRadius"
       ];
       const textareaStyles = getComputedStyle(textareaRef.current);
-
       stylesToCopy.forEach((p: string) => {
         const property = snakeToCamel(p);
 
