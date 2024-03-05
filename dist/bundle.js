@@ -59,13 +59,14 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
       throw new Error("Textarea ref is not defined");
     }
-    var borderWidths = parsePxToNumber(styles.borderWidth) * 2;
+    var xPadding = parsePxToNumber(styles.paddingLeft) + parsePxToNumber(styles.paddingRight);
+    var yPadding = parsePxToNumber(styles.paddingTop) + parsePxToNumber(styles.paddingBottom);
     var _textareaRef$current = textareaRef.current,
       clientWidth = _textareaRef$current.clientWidth,
       clientHeight = _textareaRef$current.clientHeight;
     return {
-      width: clientWidth + borderWidths + "px",
-      height: clientHeight + borderWidths + "px"
+      width: clientWidth - xPadding + "px",
+      height: clientHeight - yPadding + "px"
     };
   };
   var resizeObserver = react.useMemo(function () {
@@ -80,7 +81,7 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
   }, [textareaRef, mirroredRef, getContentAreaSize]);
   var applyStyleToMirroredRef = react.useCallback(function (style) {
     if (!(mirroredRef === null || mirroredRef === void 0 ? void 0 : mirroredRef.current) || !(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;
-    var stylesToCopy = ["border", "boxSizing", "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight", "padding", "textDecoration", "textIndent", "textTransform", "whiteSpace", "wordSpacing", "wordWrap", "textAlign", "borderRadius"];
+    var stylesToCopy = ["border", "borderLeft", "borderRight", "borderTop", "borderBottom", "boxSizing", "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight", "padding", "paddingLeft", "paddingRight", "paddingTop", "margin", "marginLeft", "marginRight", "marginTop", "marginBottom", "paddingBottom", "textDecoration", "textIndent", "textTransform", "whiteSpace", "wordSpacing", "wordWrap", "textAlign", "borderRadius"];
     var textareaStyles = getComputedStyle(textareaRef.current);
     stylesToCopy.forEach(function (p) {
       var property = snakeToCamel(p);
@@ -139,6 +140,7 @@ var LinkingTextarea = /*#__PURE__*/react.forwardRef(function (_a, forwardedRef) 
   react.useEffect(function () {
     copyTextToMirroredRef();
     applyStyleToMirroredRef(textareaStyle);
+    setLinkifyText(linkTarget);
   }, [textareaStyle, copyTextToMirroredRef]);
   react.useEffect(function () {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;

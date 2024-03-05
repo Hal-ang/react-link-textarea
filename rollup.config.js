@@ -35,13 +35,14 @@ export default [
       }),
       typescript(),
       peerDepsExternal()
-    ]
+    ],
+    exclude: ["**/storybook/**", "**/stories/**", "**/stories/*.d.ts"]
   },
   {
     // path to your declaration files root
     input: "./dist/dts/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "es" }],
-    external: [/\.css$/, "**/stories/**", "**/stories.ts"],
+    external: [/\.css$/],
     plugins: [dts()]
   }
 ];
