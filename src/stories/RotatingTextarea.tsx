@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import LinkingTextarea from "../LinkingTextarea";
 import { LinkingTextareaInterface } from "../types";
 
-const RotatingTextarea = (props: LinkingTextareaInterface) => {
+const RotatingTextarea = ({
+  textareaStyle,
+  ...rest
+}: LinkingTextareaInterface) => {
   const [text, setText] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,9 +36,9 @@ const RotatingTextarea = (props: LinkingTextareaInterface) => {
       }}
     >
       <LinkingTextarea
-        {...props}
+        {...rest}
         textareaStyle={{
-          ...props.textareaStyle,
+          ...textareaStyle,
           backgroundColor: getBackgroundColor(text)
         }}
         onChange={handleChange}
