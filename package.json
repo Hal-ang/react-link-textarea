@@ -34,9 +34,14 @@
     "build": "rollup -c",
     "watch": "rollup -cw",
     "commit": "git-cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_01ca1e1a59da074"
   },
-  "author": "Hal-ang",
+  "author": {
+    "name": "Hal-ang"
+  },
   "email": "jhrang0925@gmail.com",
   "url": "https://deemmun.tistory.com",
   "license": "MIT",
@@ -51,19 +56,31 @@
     "@babel/preset-typescript": "^7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@storybook/addon-essentials": "^7.6.17",
+    "@storybook/addon-interactions": "^7.6.17",
+    "@storybook/addon-links": "^7.6.17",
+    "@storybook/addon-onboarding": "^1.0.11",
+    "@storybook/blocks": "^7.6.17",
+    "@storybook/react": "^7.6.17",
+    "@storybook/react-vite": "^7.6.17",
+    "@storybook/test": "^7.6.17",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.17",
+    "chromatic": "^11.0.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "postcss-import": "^16.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^4.11.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "standard-version": "^9.5.0",
+    "storybook": "^7.6.17",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3",
-    "standard-version": "^9.5.0"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "linkify-string": "^4.1.3"

@@ -7,47 +7,59 @@ import {
 } from "react";
 import { parsePxToNumber, snakeToCamel } from "../util";
 
-import { LinkTargetType } from "../LinkingTextarea";
+import { LinkTargetType } from "../types";
 import linkifyStr from "linkify-string";
 
 const useMirrorTextarea = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
   mirroredRef: RefObject<HTMLDivElement>
 ) => {
-  const getValidContentWidth = (styles: CSSStyleDeclaration) => {
+  const getContentAreaSize = (styles: CSSStyleDeclaration) => {
     if (!textareaRef?.current) {
       throw new Error("Textarea ref is not defined");
     }
-    const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientWidth + 2 * borderWidth + "px";
+
+    const xPadding =
+      parsePxToNumber(styles.paddingLeft) +
+      parsePxToNumber(styles.paddingRight);
+
+    const yPadding =
+      parsePxToNumber(styles.paddingTop) +
+      parsePxToNumber(styles.paddingBottom);
+
+    const { clientWidth, clientHeight } = textareaRef.current;
+
+    return {
+      width: clientWidth - xPadding + "px",
+      height: clientHeight - yPadding + "px"
+    };
   };
-  const getValidContentHeight = (styles: CSSStyleDeclaration) => {
-    if (!textareaRef?.current) {
-      throw new Error("Textarea ref is not defined");
-    }
-    const borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientHeight + 2 * borderWidth + "px";
-  };
 
-  const resizeObserver = useMemo(() => {
-    return new ResizeObserver(() => {
-      if (!mirroredRef.current || !textareaRef.current) return;
+  const resizeObserver = useMemo(
+    () =>
+      new ResizeObserver(() => {
+        if (!mirroredRef.current || !textareaRef.current) return;
 
-      const textareaStyles = getComputedStyle(textareaRef.current);
+        const { width, height } = getContentAreaSize(
+          getComputedStyle(textareaRef.current)
+        );
 
-      mirroredRef.current.style.width = getValidContentWidth(textareaStyles);
-      mirroredRef.current.style.height = getValidContentHeight(textareaStyles);
-    });
-  }, [textareaRef, mirroredRef, getValidContentWidth, getValidContentHeight]);
+        mirroredRef.current.style.width = width;
+        mirroredRef.current.style.height = height;
+      }),
+    [textareaRef, mirroredRef, getContentAreaSize]
+  );
 
-  const overwriteStyleToMirroredRef = useCallback(
+  const applyStyleToMirroredRef = useCallback(
     (style?: CSSProperties) => {
-      if (!mirroredRef.current || !textareaRef.current) return;
+      if (!mirroredRef?.current || !textareaRef?.current) return;
 
-      const textareaStyles = getComputedStyle(textareaRef.current);
-
-      [
+      const stylesToCopy = [
         "border",
+        "borderLeft",
+        "borderRight",
+        "borderTop",
+        "borderBottom",
         "boxSizing",
         "fontFamily",
         "fontSize",
@@ -55,6 +67,15 @@ const useMirrorTextarea = (
         "letterSpacing",
         "lineHeight",
         "padding",
+        "paddingLeft",
+        "paddingRight",
+        "paddingTop",
+        "margin",
+        "marginLeft",
+        "marginRight",
+        "marginTop",
+        "marginBottom",
+        "paddingBottom",
         "textDecoration",
         "textIndent",
         "textTransform",
@@ -63,9 +84,10 @@ const useMirrorTextarea = (
         "wordWrap",
         "textAlign",
         "borderRadius"
-      ].forEach((p: string) => {
-        if (!mirroredRef.current) return;
+      ];
+      const textareaStyles = getComputedStyle(textareaRef.current);
 
+      stylesToCopy.forEach((p: string) => {
         const property = snakeToCamel(p);
 
         // @ts-ignore
@@ -84,15 +106,15 @@ const useMirrorTextarea = (
     [mirroredRef, textareaRef]
   );
 
-  const setLinkifyStr = (linkTarget?: LinkTargetType) => {
+  const setLinkifyText = (linkTarget: LinkTargetType) => {
     if (!mirroredRef?.current || !textareaRef.current) return;
 
     mirroredRef.current.innerHTML = linkifyStr(textareaRef.current.value, {
-      target: linkTarget || "_blank"
+      target: linkTarget
     });
   };
 
-  const overwireTextToMirroredRef = () => {
+  const copyTextToMirroredRef = () => {
     if (!textareaRef?.current || !mirroredRef?.current) return;
 
     mirroredRef.current.textContent = textareaRef.current.value;
@@ -100,9 +122,9 @@ const useMirrorTextarea = (
 
   return {
     resizeObserver,
-    overwriteStyleToMirroredRef,
-    setLinkifyStr,
-    overwireTextToMirroredRef
+    applyStyleToMirroredRef,
+    setLinkifyText,
+    copyTextToMirroredRef
   };
 };
 

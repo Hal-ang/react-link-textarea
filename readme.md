@@ -8,9 +8,6 @@
 <img alt="react-^18.2.0" src="https://img.shields.io/badge/react-^18.2.0-3f72af" />
 </p>
 
-<p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-v1.1.3-blue.svg?cacheSeconds=2592000" />
-
 <br>
 <p align="center">Helper component for a `textarea` tag that allows `a` tag link connection and interaction</p>
 
@@ -25,6 +22,13 @@ Due to the structural limitation of the existing textarea tag, which only handle
 It makes the textarea tag work as if it supports the a tag.
 
 You can use the existing **textarea attributes**, and **CSS control** such as `resize` is also possible.
+
+<br>
+
+## Storybook
+
+You can see various implementations of LinkingTextarea through Storybook.
+[Click here!](https://65e6e3fb2f2acb45252c479b-tggusrntxj.chromatic.com/?path=/story/example-fontsizeslider--classic)
 
 <br>
 
@@ -192,3 +196,11 @@ const Section = () => {
   );
 };
 ```
+
+<br>
+
+## Changelog
+
+[changelog.md](https://github.com/Hal-ang/react-link-textarea/blob/master/CHANGELOG.md)
+
+<br>

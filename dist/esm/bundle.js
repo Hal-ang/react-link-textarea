@@ -1,4 +1,4 @@
-import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
+import { jsxs, jsx } from 'react/jsx-runtime';
 import { useMemo, useCallback, forwardRef, useRef, useEffect } from 'react';
 import linkifyStr from 'linkify-string';
 
@@ -53,33 +53,35 @@ var parsePxToNumber = function parsePxToNumber(value) {
 };
 
 var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
-  var getValidContentWidth = function getValidContentWidth(styles) {
+  var getContentAreaSize = function getContentAreaSize(styles) {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
       throw new Error("Textarea ref is not defined");
     }
-    var borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientWidth + 2 * borderWidth + "px";
-  };
-  var getValidContentHeight = function getValidContentHeight(styles) {
-    if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) {
-      throw new Error("Textarea ref is not defined");
-    }
-    var borderWidth = parsePxToNumber(styles.borderWidth);
-    return textareaRef.current.clientHeight + 2 * borderWidth + "px";
+    var xPadding = parsePxToNumber(styles.paddingLeft) + parsePxToNumber(styles.paddingRight);
+    var yPadding = parsePxToNumber(styles.paddingTop) + parsePxToNumber(styles.paddingBottom);
+    var _textareaRef$current = textareaRef.current,
+      clientWidth = _textareaRef$current.clientWidth,
+      clientHeight = _textareaRef$current.clientHeight;
+    return {
+      width: clientWidth - xPadding + "px",
+      height: clientHeight - yPadding + "px"
+    };
   };
   var resizeObserver = useMemo(function () {
     return new ResizeObserver(function () {
       if (!mirroredRef.current || !textareaRef.current) return;
-      var textareaStyles = getComputedStyle(textareaRef.current);
-      mirroredRef.current.style.width = getValidContentWidth(textareaStyles);
-      mirroredRef.current.style.height = getValidContentHeight(textareaStyles);
+      var _getContentAreaSize = getContentAreaSize(getComputedStyle(textareaRef.current)),
+        width = _getContentAreaSize.width,
+        height = _getContentAreaSize.height;
+      mirroredRef.current.style.width = width;
+      mirroredRef.current.style.height = height;
     });
-  }, [textareaRef, mirroredRef, getValidContentWidth, getValidContentHeight]);
-  var overwriteStyleToMirroredRef = useCallback(function (style) {
-    if (!mirroredRef.current || !textareaRef.current) return;
+  }, [textareaRef, mirroredRef, getContentAreaSize]);
+  var applyStyleToMirroredRef = useCallback(function (style) {
+    if (!(mirroredRef === null || mirroredRef === void 0 ? void 0 : mirroredRef.current) || !(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;
+    var stylesToCopy = ["border", "borderLeft", "borderRight", "borderTop", "borderBottom", "boxSizing", "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight", "padding", "paddingLeft", "paddingRight", "paddingTop", "margin", "marginLeft", "marginRight", "marginTop", "marginBottom", "paddingBottom", "textDecoration", "textIndent", "textTransform", "whiteSpace", "wordSpacing", "wordWrap", "textAlign", "borderRadius"];
     var textareaStyles = getComputedStyle(textareaRef.current);
-    ["border", "boxSizing", "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight", "padding", "textDecoration", "textIndent", "textTransform", "whiteSpace", "wordSpacing", "wordWrap", "textAlign", "borderRadius"].forEach(function (p) {
-      if (!mirroredRef.current) return;
+    stylesToCopy.forEach(function (p) {
       var property = snakeToCamel(p);
       // @ts-ignore
       mirroredRef.current.style[property] = textareaStyles[property];
@@ -92,32 +94,35 @@ var useMirrorTextarea = function useMirrorTextarea(textareaRef, mirroredRef) {
       mirroredRef.current.style.backgroundColor = style.backgroundColor;
     }
   }, [mirroredRef, textareaRef]);
-  var setLinkifyStr = function setLinkifyStr(linkTarget) {
+  var setLinkifyText = function setLinkifyText(linkTarget) {
     if (!(mirroredRef === null || mirroredRef === void 0 ? void 0 : mirroredRef.current) || !textareaRef.current) return;
     mirroredRef.current.innerHTML = linkifyStr(textareaRef.current.value, {
-      target: linkTarget || "_blank"
+      target: linkTarget
     });
   };
-  var overwireTextToMirroredRef = function overwireTextToMirroredRef() {
+  var copyTextToMirroredRef = function copyTextToMirroredRef() {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current) || !(mirroredRef === null || mirroredRef === void 0 ? void 0 : mirroredRef.current)) return;
     mirroredRef.current.textContent = textareaRef.current.value;
   };
   return {
     resizeObserver: resizeObserver,
-    overwriteStyleToMirroredRef: overwriteStyleToMirroredRef,
-    setLinkifyStr: setLinkifyStr,
-    overwireTextToMirroredRef: overwireTextToMirroredRef
+    applyStyleToMirroredRef: applyStyleToMirroredRef,
+    setLinkifyText: setLinkifyText,
+    copyTextToMirroredRef: copyTextToMirroredRef
   };
 };
 
 var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
-  var containerStyle = _a.containerStyle,
-    textareaStyle = _a.textareaStyle,
+  var _a$containerStyle = _a.containerStyle,
+    containerStyle = _a$containerStyle === void 0 ? {} : _a$containerStyle,
+    _a$textareaStyle = _a.textareaStyle,
+    textareaStyle = _a$textareaStyle === void 0 ? {} : _a$textareaStyle,
     _a$containerClassName = _a.containerClassName,
     containerClassName = _a$containerClassName === void 0 ? "" : _a$containerClassName,
     _a$textareaClassName = _a.textareaClassName,
     textareaClassName = _a$textareaClassName === void 0 ? "" : _a$textareaClassName,
-    linkTarget = _a.linkTarget,
+    _a$linkTarget = _a.linkTarget,
+    linkTarget = _a$linkTarget === void 0 ? "_blank" : _a$linkTarget,
     _a$fontColor = _a.fontColor,
     fontColor = _a$fontColor === void 0 ? "black" : _a$fontColor,
     _a$caretColor = _a.caretColor,
@@ -127,14 +132,14 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
   var mirroredRef = useRef(null);
   var _useMirrorTextarea = useMirrorTextarea(textareaRef, mirroredRef),
     resizeObserver = _useMirrorTextarea.resizeObserver,
-    overwriteStyleToMirroredRef = _useMirrorTextarea.overwriteStyleToMirroredRef,
-    setLinkifyStr = _useMirrorTextarea.setLinkifyStr,
-    overwireTextToMirroredRef = _useMirrorTextarea.overwireTextToMirroredRef;
+    applyStyleToMirroredRef = _useMirrorTextarea.applyStyleToMirroredRef,
+    setLinkifyText = _useMirrorTextarea.setLinkifyText,
+    copyTextToMirroredRef = _useMirrorTextarea.copyTextToMirroredRef;
   useEffect(function () {
-    overwireTextToMirroredRef();
-    overwriteStyleToMirroredRef(textareaStyle);
-    setLinkifyStr(linkTarget);
-  }, [textareaStyle, overwireTextToMirroredRef]);
+    copyTextToMirroredRef();
+    applyStyleToMirroredRef(textareaStyle);
+    setLinkifyText(linkTarget);
+  }, [textareaStyle, copyTextToMirroredRef]);
   useEffect(function () {
     if (!(textareaRef === null || textareaRef === void 0 ? void 0 : textareaRef.current)) return;
     resizeObserver.observe(textareaRef.current);
@@ -148,58 +153,56 @@ var LinkingTextarea = /*#__PURE__*/forwardRef(function (_a, forwardedRef) {
       if (!textareaRef.current || !mirroredRef.current) return;
       mirroredRef.current.scrollTop = textareaRef.current.scrollTop;
     };
-    textareaRef.current.addEventListener("scroll", handleScrollTop);
     var convertToLink = function convertToLink() {
-      setLinkifyStr(linkTarget);
+      setLinkifyText(linkTarget);
     };
+    textareaRef.current.addEventListener("scroll", handleScrollTop);
     textareaRef.current.addEventListener("input", convertToLink);
     return function () {
       var _a, _b;
       (_a = textareaRef.current) === null || _a === void 0 ? void 0 : _a.removeEventListener("scroll", handleScrollTop);
       (_b = textareaRef.current) === null || _b === void 0 ? void 0 : _b.removeEventListener("input", convertToLink);
     };
-  }, [textareaRef, mirroredRef, linkTarget]);
-  return jsx(Fragment, {
-    children: jsxs("div", {
-      className: "link-textarea-container ".concat(containerClassName),
-      style: Object.assign(Object.assign({}, containerStyle), {
-        position: "relative"
-      }),
-      children: [jsx("textarea", Object.assign({
-        ref: function ref(node) {
-          textareaRef.current = node;
-          if (typeof forwardedRef === "function") {
-            forwardedRef(node);
-          } else if (forwardedRef) {
-            forwardedRef.current = node;
-          }
-        },
-        className: "link-textarea-container__textarea ".concat(textareaClassName),
-        style: Object.assign(Object.assign({
-          width: "100%",
-          height: "100%",
-          caretColor: caretColor
-        }, textareaStyle), {
-          color: "transparent",
-          position: "relative"
-        })
-      }, rest)), jsx("div", {
-        className: "link-textarea-container__mirror",
-        ref: mirroredRef,
-        style: {
-          color: fontColor,
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          userSelect: "none",
-          overflow: "hidden",
-          pointerEvents: "none"
+  }, [textareaRef, mirroredRef, linkTarget, setLinkifyText]);
+  return jsxs("div", {
+    className: "link-textarea-container ".concat(containerClassName),
+    style: Object.assign(Object.assign({}, containerStyle), {
+      position: "relative"
+    }),
+    children: [jsx("textarea", Object.assign({
+      ref: function ref(node) {
+        textareaRef.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
         }
-      })]
-    })
+      },
+      className: "link-textarea-container__textarea ".concat(textareaClassName),
+      style: Object.assign(Object.assign({
+        width: "100%",
+        height: "100%",
+        caretColor: caretColor
+      }, textareaStyle), {
+        color: "transparent",
+        position: "relative"
+      })
+    }, rest)), jsx("div", {
+      ref: mirroredRef,
+      className: "link-textarea-container__mirror",
+      style: {
+        color: fontColor,
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        userSelect: "none",
+        overflow: "hidden",
+        pointerEvents: "none"
+      }
+    })]
   });
 });
 

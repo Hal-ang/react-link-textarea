@@ -35,7 +35,8 @@ export default [
       }),
       typescript(),
       peerDepsExternal()
-    ]
+    ],
+    exclude: ["**/storybook/**", "**/stories/**", "**/stories/*.d.ts"]
   },
   {
     // path to your declaration files root
