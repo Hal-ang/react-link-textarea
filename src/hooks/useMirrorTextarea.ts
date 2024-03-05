@@ -18,12 +18,20 @@ const useMirrorTextarea = (
     if (!textareaRef?.current) {
       throw new Error("Textarea ref is not defined");
     }
-    const borderWidths = parsePxToNumber(styles.borderWidth) * 2;
+
+    const xPadding =
+      parsePxToNumber(styles.paddingLeft) +
+      parsePxToNumber(styles.paddingRight);
+
+    const yPadding =
+      parsePxToNumber(styles.paddingTop) +
+      parsePxToNumber(styles.paddingBottom);
+
     const { clientWidth, clientHeight } = textareaRef.current;
 
     return {
-      width: clientWidth + borderWidths + "px",
-      height: clientHeight + borderWidths + "px"
+      width: clientWidth - xPadding + "px",
+      height: clientHeight - yPadding + "px"
     };
   };
 
@@ -48,6 +56,10 @@ const useMirrorTextarea = (
 
       const stylesToCopy = [
         "border",
+        "borderLeft",
+        "borderRight",
+        "borderTop",
+        "borderBottom",
         "boxSizing",
         "fontFamily",
         "fontSize",
@@ -55,6 +67,15 @@ const useMirrorTextarea = (
         "letterSpacing",
         "lineHeight",
         "padding",
+        "paddingLeft",
+        "paddingRight",
+        "paddingTop",
+        "margin",
+        "marginLeft",
+        "marginRight",
+        "marginTop",
+        "marginBottom",
+        "paddingBottom",
         "textDecoration",
         "textIndent",
         "textTransform",
