@@ -202,5 +202,3 @@ const Section = () => {
 ## Changelog
 
 [changelog.md](https://github.com/Hal-ang/react-link-textarea/blob/master/CHANGELOG.md)
-
-<br>
