@@ -41,7 +41,7 @@ export default [
     // path to your declaration files root
     input: "./dist/dts/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "es" }],
-    external: [/\.css$/],
+    external: [/\.css$/, "**/stories/**", "**/stories.ts"],
     plugins: [dts()]
   }
 ];

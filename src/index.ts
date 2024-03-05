@@ -1,3 +1,3 @@
 import LinkingTextarea from "./LinkingTextarea";
 
-export default { LinkingTextarea };
+export default LinkingTextarea;
