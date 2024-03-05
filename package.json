@@ -36,9 +36,12 @@
     "commit": "git-cz",
     "release": "standard-version",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_01ca1e1a59da074"
   },
-  "author": "Hal-ang",
+  "author": {
+    "name": "Hal-ang"
+  },
   "email": "jhrang0925@gmail.com",
   "url": "https://deemmun.tistory.com",
   "license": "MIT",
@@ -64,6 +67,7 @@
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.17",
+    "chromatic": "^11.0.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "postcss-import": "^16.0.1",
