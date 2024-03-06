@@ -7,6 +7,7 @@ import dts from "rollup-plugin-dts";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default [
   {
@@ -34,7 +35,8 @@ export default [
         plugins: [cssimport(), autoprefixer()]
       }),
       typescript(),
-      peerDepsExternal()
+      peerDepsExternal(),
+      visualizer()
     ],
     exclude: ["**/storybook/**", "**/stories/**", "**/stories/*.d.ts"]
   },
