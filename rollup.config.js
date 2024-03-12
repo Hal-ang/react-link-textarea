@@ -1,11 +1,11 @@
 // rollup.config.js
-
 import autoprefixer from "autoprefixer";
 import babel from "@rollup/plugin-babel";
 import cssimport from "postcss-import";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import { visualizer } from "rollup-plugin-visualizer";
 
@@ -34,6 +34,7 @@ export default [
       postcss({
         plugins: [cssimport(), autoprefixer()]
       }),
+      terser(),
       typescript(),
       peerDepsExternal(),
       visualizer()
