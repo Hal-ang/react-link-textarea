@@ -21,8 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rm -rf package-lock.json
-          npm install
+          yarn install
 
       - name: Set up Git
         run: |
@@ -30,7 +29,7 @@ jobs:
           git config --global user.email 'jpjgv05@gmail.com'
 
       - name: Build
-        run: npm run build
+        run: yarn build
 
       - name: Commit and push if changed
         run: |

@@ -1,3 +1,5 @@
+"use client";
+
 import "./style/index.css";
 
 import { ForwardedRef, forwardRef, useEffect, useRef } from "react";
