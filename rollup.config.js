@@ -1,7 +1,8 @@
 import autoprefixer from "autoprefixer";
-import babel from "@rollup/plugin-babel";
 import cssimport from "postcss-import";
 import dts from "rollup-plugin-dts";
+import { minify } from "rollup-plugin-esbuild";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import preserveDirectives from "rollup-preserve-directives";
@@ -24,8 +25,11 @@ export default [
         sourcemap: true
       }
     ],
+    external: ["linkify-string"],
     plugins: [
+      nodeResolve(),
       visualizer(),
+      minify(),
       swc(),
       preserveDirectives(),
       postcss({
