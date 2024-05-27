@@ -36,7 +36,8 @@ export default [
         plugins: [cssimport(), autoprefixer()]
       }),
       typescript(),
-      peerDepsExternal()
+      peerDepsExternal(),
+      visualizer()
     ],
     exclude: ["**/storybook/**", "**/stories/**", "**/stories/*.d.ts"]
   },
