@@ -28,6 +28,17 @@ jobs:
           git config --global user.name 'Hal-ang'
           git config --global user.email 'jpjgv05@gmail.com'
 
+      - name: Build
+        run: yarn build
+
+      - name: Commit and push if changed
+        run: |
+          git add .
+          git commit -m "chore: Automated build commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
       - name: Run release
         run: yarn release
         env:
