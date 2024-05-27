@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.10](https://github.com/Hal-ang/react-link-textarea/compare/v1.1.9...v1.1.10) (2024-05-27)
+
+
+### Bug Fixes
+
+* **linkifyjs:** fix unsupported origin dep ([0030ebf](https://github.com/Hal-ang/react-link-textarea/commit/0030ebf35e9cfb291e2ec4ec47075cf130358a05))
+
 ### [1.1.9](https://github.com/Hal-ang/react-link-textarea/compare/v1.1.8...v1.1.9) (2024-05-27)
 
 ### [1.1.8](https://github.com/Hal-ang/react-link-textarea/compare/v1.1.7...v1.1.8) (2024-03-12)
