@@ -35,7 +35,8 @@ You can see various implementations of LinkingTextarea through Storybook.
 ## Installation
 
 ```
-npm install react-textarea-link
+npm install react-link-textarea
+yarn add react-link-textarea
 ```
 
 ## Usage
@@ -43,13 +44,7 @@ npm install react-textarea-link
 ### First step
 
 ```JSX
-...
-"use client" // Add if you use next.js.
 import LinkingTextarea from 'react-link-textarea'; // needs importing
-
-const Component = () => {
-  ...
-}
 ```
 
 <br>
