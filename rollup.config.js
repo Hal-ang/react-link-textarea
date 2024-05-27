@@ -1,11 +1,12 @@
-// rollup.config.js
 import autoprefixer from "autoprefixer";
-import babel from "@rollup/plugin-babel";
 import cssimport from "postcss-import";
 import dts from "rollup-plugin-dts";
+import { minify } from "rollup-plugin-esbuild";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import terser from "@rollup/plugin-terser";
+import preserveDirectives from "rollup-preserve-directives";
+import { swc } from "rollup-plugin-swc3";
 import typescript from "@rollup/plugin-typescript";
 import { visualizer } from "rollup-plugin-visualizer";
 
@@ -24,17 +25,16 @@ export default [
         sourcemap: true
       }
     ],
+    external: ["linkify-string"],
     plugins: [
-      // 바벨 트랜스파일러 설정
-      babel({
-        babelHelpers: "bundled",
-        presets: ["@babel/preset-env", "@babel/preset-react"],
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
-      }),
+      nodeResolve(),
+      visualizer(),
+      minify(),
+      swc(),
+      preserveDirectives(),
       postcss({
         plugins: [cssimport(), autoprefixer()]
       }),
-      terser(),
       typescript(),
       peerDepsExternal(),
       visualizer()
